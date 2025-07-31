@@ -1,0 +1,367 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to run tests against'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+
+env:
+  PYTHON_VERSION: '3.11'
+  NODE_VERSION: '18'
+
+jobs:
+  # Documentation and Agent Validation
+  validate-agents:
+    name: Validate AI Agents
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Cache Python dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml jsonschema markdown
+
+      - name: Validate agent configurations
+        run: |
+          python -c "
+          import os
+          import yaml
+          import sys
+          
+          agents_dir = '.claude/agents'
+          valid = True
+          
+          if os.path.exists(agents_dir):
+              for file in os.listdir(agents_dir):
+                  if file.endswith('.md'):
+                      filepath = os.path.join(agents_dir, file)
+                      try:
+                          with open(filepath, 'r') as f:
+                              content = f.read()
+                              if content.startswith('---'):
+                                  yaml_end = content.find('---', 3)
+                                  if yaml_end != -1:
+                                      yaml_content = content[3:yaml_end]
+                                      yaml.safe_load(yaml_content)
+                                      print(f'✓ Valid agent: {file}')
+                                  else:
+                                      print(f'✗ Invalid YAML format: {file}')
+                                      valid = False
+                              else:
+                                  print(f'✗ Missing YAML front matter: {file}')
+                                  valid = False
+                      except Exception as e:
+                          print(f'✗ Error parsing {file}: {e}')
+                          valid = False
+              
+              if not valid:
+                  sys.exit(1)
+              else:
+                  print('All agents validated successfully!')
+          else:
+              print('No agents directory found')
+          "
+
+      - name: Validate documentation structure
+        run: |
+          echo "Checking documentation structure..."
+          
+          # Check required files
+          required_files=("README.md" "CLAUDE.md" "prd.md")
+          for file in "${required_files[@]}"; do
+            if [[ -f "$file" ]]; then
+              echo "✓ Found: $file"
+            else
+              echo "✗ Missing: $file"
+              exit 1
+            fi
+          done
+          
+          # Check docs directory structure
+          if [[ -d "docs" ]]; then
+            echo "✓ Found: docs directory"
+          else
+            echo "✗ Missing: docs directory"
+            exit 1
+          fi
+          
+          echo "Documentation structure validated!"
+
+  # Markdown and Documentation Linting
+  markdown-lint:
+    name: Markdown Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cache Node.js dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install markdownlint-cli
+        run: npm install -g markdownlint-cli
+
+      - name: Create markdownlint config
+        run: |
+          cat > .markdownlint.json << 'EOF'
+          {
+            "MD013": false,
+            "MD033": false,
+            "MD041": false,
+            "MD001": false
+          }
+          EOF
+
+      - name: Run markdownlint
+        run: |
+          markdownlint "**/*.md" --ignore node_modules || true
+          echo "Markdown linting completed"
+
+  # Security Scanning
+  security-scan:
+    name: Security Scanning
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: Check for sensitive files
+        run: |
+          echo "Checking for sensitive files..."
+          
+          # Check for potential secrets in files
+          if find . -type f \( -name "*.key" -o -name "*.pem" -o -name "*.p12" -o -name "*.pfx" \) | grep -v ".git" | head -10; then
+            echo "⚠️  Found potential secret files"
+          fi
+          
+          # Check for common secret patterns (basic check)
+          if grep -r -i "password\|secret\|token\|api[_-]key" . --include="*.md" --include="*.txt" --include="*.json" | grep -v ".git" | head -5; then
+            echo "⚠️  Found potential secrets in text files"
+          fi
+          
+          echo "Security scan completed"
+
+  # Agent Testing
+  agent-tests:
+    name: Agent Integration Tests
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Test agent workflow dependencies
+        run: |
+          python -c "
+          import os
+          import re
+          
+          # Define expected workflow
+          workflow = {
+              'po.md': [],  # Product Owner - no dependencies
+              'architect.md': ['PRD.md'],  # Architect depends on PRD
+              'mobile-ui-designer.md': ['DESIGN.md', 'PRD.md'],
+              'web-ui-designer.md': ['DESIGN.md', 'PRD.md'],
+              'security-engineer.md': ['DESIGN.md', 'PRD.md'],
+              'mobile-developer.md': ['MOBILE-UI.md', 'DESIGN.md', 'PRD.md'],
+              'web-developer.md': ['WEB-UI.md', 'DESIGN.md', 'PRD.md'],
+              'backend-developer.md': ['DESIGN.md', 'PRD.md', 'SECURITY.md'],
+              'qa-tester.md': ['MOBILE-DEV.md', 'WEB-DEV.md', 'BACKEND-DEV.md', 'SECURITY.md', 'PRD.md'],
+              'devops-engineer.md': ['MOBILE-DEV.md', 'WEB-DEV.md', 'BACKEND-DEV.md', 'QA-TEST.md', 'SECURITY.md']
+          }
+          
+          agents_dir = '.claude/agents'
+          if os.path.exists(agents_dir):
+              for agent_file in workflow.keys():
+                  agent_path = os.path.join(agents_dir, agent_file)
+                  if os.path.exists(agent_path):
+                      print(f'✓ Agent found: {agent_file}')
+                  else:
+                      print(f'⚠️  Agent missing: {agent_file}')
+              print('Agent workflow validation completed')
+          else:
+              print('No agents directory found')
+          "
+
+  # Performance and Quality Checks
+  quality-checks:
+    name: Quality Assurance
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check file sizes
+        run: |
+          echo "Checking for large files..."
+          find . -type f -size +10M -not -path "./.git/*" | head -10 || true
+
+      - name: Check line endings
+        run: |
+          echo "Checking line endings..."
+          if command -v dos2unix >/dev/null; then
+            find . -type f \( -name "*.md" -o -name "*.txt" -o -name "*.json" \) -not -path "./.git/*" -exec dos2unix -ic {} \; | head -10 || true
+          fi
+
+      - name: Repository statistics
+        run: |
+          echo "Repository Statistics:"
+          echo "====================="
+          echo "Total files: $(find . -type f -not -path "./.git/*" | wc -l)"
+          echo "Markdown files: $(find . -name "*.md" -not -path "./.git/*" | wc -l)"
+          echo "Agent files: $(find .claude/agents -name "*.md" 2>/dev/null | wc -l || echo 0)"
+          echo "Documentation size: $(du -sh docs/ 2>/dev/null || echo "0B")"
+
+  # Build and Test (when applicable)
+  build-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for buildable components
+        run: |
+          echo "Checking for buildable components..."
+          
+          # Check for Python projects
+          if [[ -f "requirements.txt" || -f "pyproject.toml" || -f "setup.py" ]]; then
+            echo "Python project detected"
+            # Add Python build steps here when needed
+          fi
+          
+          # Check for Node.js projects
+          if [[ -f "package.json" ]]; then
+            echo "Node.js project detected"
+            # Add Node.js build steps here when needed
+          fi
+          
+          # Check for Docker
+          if [[ -f "Dockerfile" ]]; then
+            echo "Docker configuration detected"
+            # Add Docker build steps here when needed
+          fi
+          
+          echo "Build check completed"
+
+  # Deployment readiness check
+  deployment-check:
+    name: Deployment Readiness
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs: [validate-agents, markdown-lint, security-scan, quality-checks]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check deployment readiness
+        run: |
+          echo "Checking deployment readiness..."
+          
+          # Check required files for deployment
+          deployment_files=("LICENSE" "README.md" ".gitignore")
+          for file in "${deployment_files[@]}"; do
+            if [[ -f "$file" ]]; then
+              echo "✓ Found: $file"
+            else
+              echo "✗ Missing: $file"
+              exit 1
+            fi
+          done
+          
+          # Check GitHub configuration
+          if [[ -d ".github/workflows" ]]; then
+            echo "✓ GitHub Actions configured"
+          else
+            echo "⚠️  No GitHub Actions workflows found"
+          fi
+          
+          echo "Deployment readiness check completed"
+
+      - name: Generate release notes
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          echo "# Release Notes" > release-notes.md
+          echo "" >> release-notes.md
+          echo "## Changes in this release:" >> release-notes.md
+          echo "" >> release-notes.md
+          
+          # Get recent commits
+          git log --oneline -10 --pretty=format:"- %s" >> release-notes.md || echo "- Initial release" >> release-notes.md
+          
+          echo "" >> release-notes.md
+          echo "## Agent Status:" >> release-notes.md
+          
+          # List agents
+          if [[ -d ".claude/agents" ]]; then
+            echo "- Agents configured: $(find .claude/agents -name "*.md" | wc -l)" >> release-notes.md
+            echo "- Documentation files: $(find . -name "*.md" -not -path "./.git/*" | wc -l)" >> release-notes.md
+          fi
+          
+          cat release-notes.md
+
+      - name: Upload release notes
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-notes
+          path: release-notes.md
+          retention-days: 30

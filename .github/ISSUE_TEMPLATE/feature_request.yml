@@ -1,0 +1,187 @@
+name: Feature Request
+description: Suggest a new feature or enhancement for the AI Agent Team
+title: "[FEATURE]: "
+labels: ["enhancement", "triage"]
+assignees:
+  - ai-agent-team/maintainers
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new feature! Please provide as much detail as possible to help us understand your request.
+
+  - type: dropdown
+    id: feature-type
+    attributes:
+      label: Feature Type
+      description: What type of feature are you requesting?
+      options:
+        - New AI Agent
+        - Agent Enhancement
+        - Workflow Improvement
+        - Documentation Update
+        - Tool Integration
+        - Performance Optimization
+        - Security Enhancement
+        - User Experience Improvement
+        - Other
+      default: 0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: affected-agents
+    attributes:
+      label: Which agents would be affected?
+      description: Select the agent(s) that would be involved in this feature
+      multiple: true
+      options:
+        - Will (Product Owner)
+        - Mike (System Architect)
+        - Jennifer (Mobile UI Designer)
+        - Amy (Web UI Designer)
+        - Bob (Mobile Developer)
+        - Jim (Web Developer)
+        - Luke (Backend Developer)
+        - Sarah (Security Engineer)
+        - Vijay (QA Tester)
+        - Alex (DevOps Engineer)
+        - All agents
+        - System-wide/Infrastructure
+        - New agent (specify in description)
+
+  - type: textarea
+    id: problem-summary
+    attributes:
+      label: Problem Summary
+      description: What problem does this feature solve?
+      placeholder: |
+        Describe the current limitation or problem that this feature would address...
+        
+        Example: "Currently, the mobile developer agent doesn't support React Native, limiting cross-platform development options..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution
+      description: Describe your proposed solution in detail
+      placeholder: |
+        Provide a detailed description of how you envision this feature working...
+        
+        Example: "Add React Native support to the mobile developer agent by:
+        1. Updating the agent configuration to include React Native tools
+        2. Creating React Native-specific code generation templates
+        3. Adding cross-platform testing strategies..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: user-stories
+    attributes:
+      label: User Stories
+      description: Describe how users would interact with this feature
+      placeholder: |
+        Write user stories in the format: "As a [user type], I want [goal] so that [benefit]"
+        
+        Example:
+        - As a developer, I want to specify React Native as my mobile framework so that I can build cross-platform apps
+        - As a project manager, I want to see React Native projects in the deployment pipeline so that I can track progress
+      render: markdown
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: What conditions must be met for this feature to be considered complete?
+      placeholder: |
+        List specific, measurable criteria:
+        
+        - [ ] Agent configuration supports React Native framework selection
+        - [ ] Generated code follows React Native best practices
+        - [ ] Documentation includes React Native examples
+        - [ ] Integration tests validate React Native workflows
+      render: markdown
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature to you?
+      options:
+        - Low - Nice to have, not urgent
+        - Medium - Would improve workflow significantly
+        - High - Important for project success
+        - Critical - Blocking current work
+      default: 1
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternative Solutions
+      description: Have you considered any alternative approaches?
+      placeholder: |
+        Describe any alternative solutions or workarounds you've considered...
+        
+        Example: "Could use Flutter instead, but team prefers React Native due to existing expertise..."
+
+  - type: textarea
+    id: implementation-notes
+    attributes:
+      label: Implementation Notes
+      description: Do you have ideas about how this could be implemented?
+      placeholder: |
+        Share any technical insights or implementation suggestions...
+        
+        - Configuration changes needed
+        - Dependencies to add
+        - Files that would need modification
+        - Potential challenges or risks
+
+  - type: checkboxes
+    id: research
+    attributes:
+      label: Research Done
+      description: What research have you done on this feature?
+      options:
+        - label: I've checked existing issues to make sure this isn't a duplicate
+        - label: I've reviewed the current agent configurations
+        - label: I've considered the impact on the overall workflow
+        - label: I've thought about potential edge cases
+
+  - type: dropdown
+    id: complexity
+    attributes:
+      label: Estimated Complexity
+      description: How complex do you think this feature would be to implement?
+      options:
+        - Simple - Minor configuration or documentation change
+        - Medium - Moderate agent modifications or new workflow steps
+        - Complex - Significant changes to multiple agents or architecture
+        - Very Complex - Major architectural changes or new systems
+        - Unknown - Need more analysis
+      default: 4
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context, screenshots, or examples
+      placeholder: |
+        - Links to relevant documentation
+        - Screenshots or mockups
+        - Examples from other projects
+        - Any other relevant information
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our Code of Conduct
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

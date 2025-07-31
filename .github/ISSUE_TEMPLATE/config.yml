@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discussions
+    url: https://github.com/ai-agent-team/ai-agent-team/discussions
+    about: Ask questions, share ideas, and discuss the AI Agent Team with the community
+  - name: 📚 Documentation
+    url: https://github.com/ai-agent-team/ai-agent-team/blob/main/CLAUDE.md
+    about: Read the comprehensive configuration and usage guide
+  - name: 🚀 Quick Start Guide
+    url: https://github.com/ai-agent-team/ai-agent-team/blob/main/README.md
+    about: Get started with the AI Agent Team system
+  - name: 🔒 Security Issues
+    url: https://github.com/ai-agent-team/ai-agent-team/security/advisories/new
+    about: Report security vulnerabilities privately through GitHub Security Advisories

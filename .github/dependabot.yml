@@ -1,0 +1,91 @@
+version: 2
+updates:
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "ai-agent-team/maintainers"
+    assignees:
+      - "ai-agent-team/maintainers"
+    commit-message:
+      prefix: "chore"
+      prefix-development: "chore"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "github-actions"
+
+  # Python dependencies (if requirements.txt exists)
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "09:00"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "ai-agent-team/maintainers"
+    assignees:
+      - "ai-agent-team/maintainers"
+    commit-message:
+      prefix: "chore"
+      prefix-development: "chore"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "python"
+    ignore:
+      # Ignore major version updates for core dependencies
+      - dependency-name: "python"
+        update-types: ["version-update:semver-major"]
+
+  # Node.js dependencies (if package.json exists)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+      time: "09:00"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "ai-agent-team/maintainers"
+    assignees:
+      - "ai-agent-team/maintainers"
+    commit-message:
+      prefix: "chore"
+      prefix-development: "chore"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "nodejs"
+    ignore:
+      # Ignore major version updates for core frameworks
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "next"
+        update-types: ["version-update:semver-major"]
+
+  # Docker dependencies (if Dockerfile exists)
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      day: "first-monday"
+      time: "09:00"
+    open-pull-requests-limit: 3
+    reviewers:
+      - "ai-agent-team/maintainers"
+    assignees:
+      - "ai-agent-team/maintainers"
+    commit-message:
+      prefix: "chore"
+      prefix-development: "chore"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "docker"

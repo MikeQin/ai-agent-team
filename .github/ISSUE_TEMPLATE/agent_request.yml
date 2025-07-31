@@ -1,0 +1,254 @@
+name: New AI Agent Request
+description: Request a new specialized AI agent for the development team
+title: "[NEW AGENT]: "
+labels: ["new-agent", "enhancement", "triage"]
+assignees:
+  - ai-agent-team/maintainers
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new AI agent! This will help us expand the capabilities of the AI Agent Team system.
+
+  - type: input
+    id: agent-name
+    attributes:
+      label: Agent Name & Persona
+      description: What would you call this agent? (e.g., "Emma - Database Administrator")
+      placeholder: "Emma - Database Administrator"
+    validations:
+      required: true
+
+  - type: input
+    id: agent-role
+    attributes:
+      label: Primary Role/Specialty
+      description: What is this agent's main area of expertise?
+      placeholder: "Database design, optimization, and administration"
+    validations:
+      required: true
+
+  - type: textarea
+    id: agent-purpose
+    attributes:
+      label: Agent Purpose
+      description: Why is this agent needed? What gap does it fill in the current team?
+      placeholder: |
+        Describe the specific need this agent addresses...
+        
+        Example: "The current backend developer handles basic database tasks, but complex database architecture, performance tuning, and data modeling require specialized expertise that a dedicated DBA agent could provide."
+    validations:
+      required: true
+
+  - type: textarea
+    id: responsibilities
+    attributes:
+      label: Key Responsibilities
+      description: What specific tasks would this agent be responsible for?
+      placeholder: |
+        List the main responsibilities:
+        
+        - Database schema design and optimization
+        - Query performance analysis and tuning
+        - Data migration strategies
+        - Backup and recovery planning
+        - Security and access control
+        - Monitoring and alerting setup
+      render: markdown
+    validations:
+      required: true
+
+  - type: textarea
+    id: tech-stack
+    attributes:
+      label: Technology Stack
+      description: What technologies, tools, and frameworks would this agent specialize in?
+      placeholder: |
+        Example for Database Administrator:
+        - PostgreSQL, MySQL, MongoDB
+        - Database migration tools (Flyway, Liquibase)
+        - Performance monitoring (pgAdmin, MySQL Workbench)
+        - Backup tools (pg_dump, mysqldump)
+        - Cloud databases (AWS RDS, Google Cloud SQL)
+      render: markdown
+    validations:
+      required: true
+
+  - type: dropdown
+    id: workflow-position
+    attributes:
+      label: Workflow Position
+      description: Where would this agent fit in the current development workflow?
+      options:
+        - Before System Architect (requirements phase)
+        - After System Architect, parallel with designers
+        - After designers, parallel with developers
+        - After developers, before QA
+        - After QA, before DevOps
+        - After DevOps (post-deployment)
+        - Parallel to multiple stages
+        - Independent/consultative role
+      default: 3
+    validations:
+      required: true
+
+  - type: textarea
+    id: input-dependencies
+    attributes:
+      label: Input Dependencies
+      description: What inputs would this agent need from other agents or sources?
+      placeholder: |
+        List the files or information this agent would need:
+        
+        - docs/DESIGN.md (system architecture)
+        - docs/BACKEND-DEV.md (API specifications)
+        - Performance requirements from PRD
+        - Security requirements from Security Engineer
+      render: markdown
+
+  - type: textarea
+    id: output-deliverables
+    attributes:
+      label: Output Deliverables
+      description: What specific files or documentation would this agent produce?
+      placeholder: |
+        Example deliverables:
+        
+        - docs/DATABASE-DESIGN.md (schema and data model)
+        - docs/DATABASE-PERFORMANCE.md (optimization strategies)
+        - docs/DATA-MIGRATION.md (migration scripts and procedures)
+        - Database scripts and configuration files
+      render: markdown
+    validations:
+      required: true
+
+  - type: textarea
+    id: integration-points
+    attributes:
+      label: Integration with Existing Agents
+      description: How would this agent collaborate with the current team?
+      placeholder: |
+        Describe how this agent would work with others:
+        
+        - Receives architecture requirements from Mike (System Architect)
+        - Provides database specifications to Luke (Backend Developer)
+        - Collaborates with Sarah (Security Engineer) on access controls
+        - Provides performance metrics to Vijay (QA Tester)
+        - Shares deployment requirements with Alex (DevOps Engineer)
+
+  - type: dropdown
+    id: agent-complexity
+    attributes:
+      label: Agent Complexity Level
+      description: How complex would this agent be to implement?
+      options:
+        - Basic - Simple specialization of existing functionality
+        - Intermediate - New expertise area with moderate tool requirements
+        - Advanced - Complex domain knowledge with specialized tools
+        - Expert - Highly specialized with extensive tool integration
+      default: 1
+    validations:
+      required: true
+
+  - type: textarea
+    id: tools-required
+    attributes:
+      label: Required Tools
+      description: What tools would this agent need access to?
+      placeholder: |
+        List the Claude Code tools this agent would need:
+        
+        - Read, Write, Edit (for documentation and scripts)
+        - Bash (for database commands and scripts)
+        - Grep, Glob (for analyzing existing code)
+        - TodoWrite (for task management)
+        
+        And any specialized requirements...
+      render: markdown
+
+  - type: textarea
+    id: success-criteria
+    attributes:
+      label: Success Criteria
+      description: How would we measure the success of this agent?
+      placeholder: |
+        Define measurable success criteria:
+        
+        - [ ] Agent produces valid database schemas
+        - [ ] Generated migration scripts execute successfully
+        - [ ] Performance recommendations improve query times by X%
+        - [ ] Security configurations pass compliance audits
+        - [ ] Integration with existing workflow is seamless
+      render: markdown
+
+  - type: textarea
+    id: real-world-examples
+    attributes:
+      label: Real-World Use Cases
+      description: Provide specific examples of when this agent would be valuable
+      placeholder: |
+        Example scenarios:
+        
+        1. E-commerce Platform: Design product catalog database with optimized search indexes
+        2. SaaS Application: Create multi-tenant database architecture with row-level security
+        3. Analytics Platform: Design data warehouse schema for efficient reporting queries
+      render: markdown
+
+  - type: dropdown
+    id: priority-level
+    attributes:
+      label: Priority Level
+      description: How important is this agent to the overall system?
+      options:
+        - Low - Nice to have for specialized use cases
+        - Medium - Would improve many common workflows
+        - High - Addresses important gap in current capabilities
+        - Critical - Essential for production-ready systems
+      default: 1
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternative-approaches
+    attributes:
+      label: Alternative Approaches
+      description: Are there other ways to address this need without a new agent?
+      placeholder: |
+        Consider alternatives:
+        
+        - Could existing Backend Developer agent be enhanced instead?
+        - Could this be a sub-specialization or mode of an existing agent?
+        - Could external tools or services handle this requirement?
+
+  - type: checkboxes
+    id: research-done
+    attributes:
+      label: Research Completed
+      description: What research have you done on this agent request?
+      options:
+        - label: I've reviewed the current 10-agent team structure
+        - label: I've identified where this agent fits in the workflow
+        - label: I've considered integration with existing agents
+        - label: I've researched the technical requirements
+        - label: I've looked for similar requests or implementations
+
+  - type: textarea
+    id: additional-notes
+    attributes:
+      label: Additional Notes
+      description: Any other information about this agent request?
+      placeholder: |
+        - References to similar systems or tools
+        - Potential challenges or risks
+        - Implementation suggestions
+        - Timeline considerations
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our Code of Conduct
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

@@ -1,0 +1,94 @@
+name: "CodeQL Advanced Security"
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: '30 5 * * 2'  # Weekly on Tuesdays at 5:30 AM UTC
+
+jobs:
+  analyze:
+    name: Analyze Code
+    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    timeout-minutes: ${{ (matrix.language == 'swift' && 120) || 360 }}
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'python', 'javascript' ]
+        # Add more languages as the project grows:
+        # 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby', 'swift'
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: ${{ matrix.language }}
+        queries: +security-extended,security-and-quality
+        # Custom queries can be added here:
+        # queries: ./path/to/local/query, username/repo/queries@branch
+
+    - name: Setup Python (for Python analysis)
+      if: matrix.language == 'python'
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install Python dependencies (for analysis)
+      if: matrix.language == 'python'
+      run: |
+        python -m pip install --upgrade pip
+        # Install basic dependencies that might be used
+        pip install pyyaml jsonschema markdown requests
+
+    - name: Setup Node.js (for JavaScript analysis)
+      if: matrix.language == 'javascript'
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift).
+    # If this step fails, then you should remove it and run the build manually
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v2
+
+    # Manual build steps can be added here if autobuild fails:
+    # - name: Manual build
+    #   run: |
+    #     echo "Run, Build Application using script"
+    #     ./location_of_script_within_repo/buildscript.sh
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
+      with:
+        category: "/language:${{matrix.language}}"
+        upload: true
+        # Optional: specify output format
+        # output: sarif-results
+        # sarif-file: codeql-results-${{ matrix.language }}.sarif
+
+    - name: Upload CodeQL results to GitHub
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: ${{ runner.temp }}/codeql_databases/results/codeql-results-${{ matrix.language }}.sarif
+      continue-on-error: true
+
+    # Optional: Upload results as artifacts for review
+    - name: Upload analysis results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: codeql-results-${{ matrix.language }}
+        path: ${{ runner.temp }}/codeql_databases/
+        retention-days: 30
+      continue-on-error: true

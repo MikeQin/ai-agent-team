@@ -1,0 +1,149 @@
+name: Bug Report
+description: File a bug report to help us improve the AI Agent Team
+title: "[BUG]: "
+labels: ["bug", "triage"]
+assignees:
+  - ai-agent-team/maintainers
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report! Please provide as much detail as possible to help us reproduce and fix the issue.
+
+  - type: dropdown
+    id: agent
+    attributes:
+      label: Which AI Agent is affected?
+      description: Select the agent(s) where you encountered the issue
+      options:
+        - Will (Product Owner)
+        - Mike (System Architect)
+        - Jennifer (Mobile UI Designer)
+        - Amy (Web UI Designer)
+        - Bob (Mobile Developer)
+        - Jim (Web Developer)
+        - Luke (Backend Developer)
+        - Sarah (Security Engineer)
+        - Vijay (QA Tester)
+        - Alex (DevOps Engineer)
+        - Multiple agents
+        - Unknown/System-wide
+      default: 0
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear and concise description of what the bug is
+      placeholder: Tell us what you see!
+      value: "The AI agent produced unexpected output or behavior..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen instead?
+      placeholder: Describe the expected behavior...
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Steps to reproduce
+      description: How can we reproduce this issue?
+      placeholder: |
+        1. Run agent with command '...'
+        2. Provide input '...'
+        3. Agent generates output to '...'
+        4. See error or unexpected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: agent-input
+    attributes:
+      label: Agent Input
+      description: What input did you provide to the agent?
+      placeholder: |
+        Example:
+        - User requirements: "Build an e-commerce platform..."
+        - Previous agent output: docs/PRD.md
+        - Configuration: default settings
+      render: markdown
+
+  - type: textarea
+    id: agent-output
+    attributes:
+      label: Agent Output
+      description: What output did the agent generate? (Please redact any sensitive information)
+      placeholder: |
+        Paste the relevant parts of the agent output here...
+        (You can also attach files if needed)
+      render: markdown
+
+  - type: textarea
+    id: error-logs
+    attributes:
+      label: Error logs
+      description: If applicable, add any error messages or logs
+      render: shell
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Environment
+      description: What environment are you running the AI Agent Team in?
+      options:
+        - Claude Code CLI (Local)
+        - GitHub Codespaces
+        - Docker Container
+        - Other (please specify in additional context)
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: What version of the AI Agent Team are you using?
+      placeholder: "v1.0.0, commit hash, or branch name"
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How severe is this issue?
+      options:
+        - Low - Minor inconvenience, workaround available
+        - Medium - Significant impact, partial functionality affected
+        - High - Major functionality broken, no workaround
+        - Critical - System completely unusable
+      default: 1
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our Code of Conduct
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here, including screenshots if applicable
+      placeholder: |
+        - Screenshots or recordings
+        - Related issues or discussions
+        - Potential workarounds you've tried
+        - Any other relevant information

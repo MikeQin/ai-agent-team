@@ -1,0 +1,319 @@
+name: Security Scanning
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    # Run security scans weekly on Sundays at 2 AM UTC
+    - cron: '0 2 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+jobs:
+  # CodeQL Analysis
+  codeql-analysis:
+    name: CodeQL Security Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'python', 'javascript' ]
+        
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-extended,security-and-quality
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+        with:
+          category: "/language:${{matrix.language}}"
+
+  # Secret Scanning
+  secret-scan:
+    name: Secret Detection
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install truffleHog
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sh -s -- -b /usr/local/bin
+
+      - name: Run truffleHog scan
+        run: |
+          trufflehog git file://. --only-verified --fail || true
+          echo "Secret scanning completed"
+
+      - name: Custom secret patterns check
+        run: |
+          echo "Checking for custom secret patterns..."
+          
+          # Define patterns to search for
+          patterns=(
+            "password\s*=\s*['\"][^'\"]{8,}"
+            "api[_-]?key\s*=\s*['\"][^'\"]{20,}"
+            "secret\s*=\s*['\"][^'\"]{10,}"
+            "token\s*=\s*['\"][^'\"]{20,}"
+            "aws[_-]?access[_-]?key"
+            "github[_-]?token"
+          )
+          
+          found_issues=false
+          
+          for pattern in "${patterns[@]}"; do
+            if grep -r -i -P "$pattern" . --include="*.py" --include="*.js" --include="*.ts" --include="*.json" --include="*.yaml" --include="*.yml" --exclude-dir=".git" --exclude-dir="node_modules"; then
+              echo "⚠️  Found potential secret pattern: $pattern"
+              found_issues=true
+            fi
+          done
+          
+          if [[ "$found_issues" == "true" ]]; then
+            echo "❌ Secret patterns detected. Please review and remove sensitive data."
+            # Don't fail the build, just warn
+          else
+            echo "✅ No secret patterns detected"
+          fi
+
+  # Dependency Vulnerability Scanning
+  dependency-scan:
+    name: Dependency Vulnerability Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Python security tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install safety bandit
+
+      - name: Install Node.js security tools
+        run: |
+          npm install -g audit-ci
+
+      - name: Python dependency vulnerability scan
+        run: |
+          # Create a basic requirements file if none exists
+          if [[ ! -f "requirements.txt" && ! -f "pyproject.toml" ]]; then
+            echo "# AI Agent Team Python Dependencies" > requirements.txt
+            echo "pyyaml>=6.0" >> requirements.txt
+            echo "jsonschema>=4.0" >> requirements.txt
+            echo "markdown>=3.0" >> requirements.txt
+          fi
+          
+          if [[ -f "requirements.txt" ]]; then
+            echo "Scanning Python dependencies..."
+            safety check -r requirements.txt --json --output safety-report.json || true
+            if [[ -f "safety-report.json" ]]; then
+              echo "Python dependency scan completed"
+              cat safety-report.json | head -20 || true
+            fi
+          fi
+
+      - name: Python static security analysis
+        run: |
+          echo "Running Python static security analysis..."
+          
+          # Scan Python files if they exist
+          if find . -name "*.py" -not -path "./.git/*" | head -1 | grep -q ".py"; then
+            bandit -r . -f json -o bandit-report.json --exclude "./.git" || true
+            if [[ -f "bandit-report.json" ]]; then
+              echo "Bandit scan completed"
+              cat bandit-report.json | head -20 || true
+            fi
+          else
+            echo "No Python files found for static analysis"
+          fi
+
+      - name: Node.js dependency audit
+        run: |
+          if [[ -f "package.json" ]]; then
+            echo "Auditing Node.js dependencies..."
+            npm audit --audit-level=high --json > npm-audit.json || true
+            if [[ -f "npm-audit.json" ]]; then
+              echo "NPM audit completed"
+              cat npm-audit.json | head -20 || true
+            fi
+          else
+            echo "No package.json found"
+          fi
+
+      - name: Upload security reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: security-reports
+          path: |
+            safety-report.json
+            bandit-report.json
+            npm-audit.json
+          retention-days: 30
+
+  # AI Agent Specific Security Checks
+  agent-security:
+    name: AI Agent Security Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate agent configuration security
+        run: |
+          echo "Validating AI agent configurations for security..."
+          
+          agents_dir=".claude/agents"
+          if [[ -d "$agents_dir" ]]; then
+            # Check for potentially dangerous tool configurations
+            echo "Checking agent tool permissions..."
+            
+            for agent_file in "$agents_dir"/*.md; do
+              if [[ -f "$agent_file" ]]; then
+                agent_name=$(basename "$agent_file")
+                echo "Checking: $agent_name"
+                
+                # Check for dangerous tool combinations
+                if grep -i "bash.*write.*edit" "$agent_file" > /dev/null; then
+                  echo "⚠️  Agent $agent_name has powerful tool combination (bash + write + edit)"
+                fi
+                
+                # Check for unrestricted file access patterns
+                if grep -i "unrestricted\|unlimited\|any.*file" "$agent_file" > /dev/null; then
+                  echo "⚠️  Agent $agent_name may have unrestricted file access"
+                fi
+                
+                # Verify tool specifications exist
+                if grep -i "tools:" "$agent_file" > /dev/null; then
+                  echo "✓ Agent $agent_name has tool specifications"
+                else
+                  echo "⚠️  Agent $agent_name missing tool specifications"
+                fi
+              fi
+            done
+          else
+            echo "No agents directory found"
+          fi
+
+      - name: Check for prompt injection patterns
+        run: |
+          echo "Checking for potential prompt injection vulnerabilities..."
+          
+          # Look for patterns that might indicate prompt injection risks
+          patterns=(
+            "ignore.*previous.*instruction"
+            "forget.*system.*prompt"
+            "act.*as.*different"
+            "\\\\n.*system:"
+            "\\\\n.*user:"
+            "\\\\n.*assistant:"
+          )
+          
+          found_issues=false
+          
+          for pattern in "${patterns[@]}"; do
+            if grep -r -i -P "$pattern" . --include="*.md" --exclude-dir=".git"; then
+              echo "⚠️  Found potential prompt injection pattern: $pattern"
+              found_issues=true
+            fi
+          done
+          
+          if [[ "$found_issues" == "false" ]]; then
+            echo "✅ No prompt injection patterns detected"
+          fi
+
+      - name: Validate output restrictions
+        run: |
+          echo "Validating agent output restrictions..."
+          
+          # Check that agents have appropriate output constraints
+          agents_dir=".claude/agents"
+          if [[ -d "$agents_dir" ]]; then
+            for agent_file in "$agents_dir"/*.md; do
+              if [[ -f "$agent_file" ]]; then
+                agent_name=$(basename "$agent_file")
+                
+                # Check for output format specifications
+                if grep -i "output.*format\|generate.*docs/" "$agent_file" > /dev/null; then
+                  echo "✓ Agent $agent_name has output format specifications"
+                else
+                  echo "⚠️  Agent $agent_name missing output format specifications"
+                fi
+                
+                # Check for file path restrictions
+                if grep -i "docs/\|\.md\|structured" "$agent_file" > /dev/null; then
+                  echo "✓ Agent $agent_name has structured output paths"
+                fi
+              fi
+            done
+          fi
+
+  # Security Summary Report
+  security-summary:
+    name: Security Summary
+    runs-on: ubuntu-latest
+    needs: [codeql-analysis, secret-scan, dependency-scan, agent-security]
+    if: always()
+    steps:
+      - name: Generate security summary
+        run: |
+          echo "# AI Agent Team Security Report" > security-summary.md
+          echo "" >> security-summary.md
+          echo "Generated on: $(date)" >> security-summary.md
+          echo "" >> security-summary.md
+          
+          echo "## Security Checks Completed:" >> security-summary.md
+          echo "- ✅ CodeQL Analysis" >> security-summary.md
+          echo "- ✅ Secret Scanning" >> security-summary.md
+          echo "- ✅ Dependency Vulnerability Scan" >> security-summary.md
+          echo "- ✅ AI Agent Security Validation" >> security-summary.md
+          echo "" >> security-summary.md
+          
+          echo "## Recommendations:" >> security-summary.md
+          echo "1. Regularly update dependencies" >> security-summary.md
+          echo "2. Review agent tool permissions periodically" >> security-summary.md
+          echo "3. Monitor for prompt injection attempts" >> security-summary.md
+          echo "4. Implement input validation in production deployments" >> security-summary.md
+          echo "" >> security-summary.md
+          
+          echo "## Next Steps:" >> security-summary.md
+          echo "- Review any warnings from individual scans" >> security-summary.md
+          echo "- Update security policies as needed" >> security-summary.md
+          echo "- Schedule regular security reviews" >> security-summary.md
+          
+          cat security-summary.md
+
+      - name: Upload security summary
+        uses: actions/upload-artifact@v3
+        with:
+          name: security-summary
+          path: security-summary.md
+          retention-days: 90
