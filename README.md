@@ -533,6 +533,29 @@ The AI Agent Team can be customized for different:
 
 See `framework/CLAUDE.md` for detailed configuration and customization instructions.
 
+## ⚠️ **Important Disclaimers**
+
+### **📋 Framework Dependency**
+This framework is built upon **Claude Code** - Anthropic's official CLI for Claude. You must have Claude Code installed and configured to use this framework.
+
+**Installation:**
+- Visit [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code) for setup instructions
+- Requires valid Anthropic API access and Claude Code CLI
+
+### **💰 Token Usage Warning**
+**⚠️ IMPORTANT:** Executing complete projects with this framework can consume **significant amounts of tokens**.
+
+**Token Consumption Factors:**
+- **Design Phase**: Each agent generates 1,000-5,000+ tokens of comprehensive documentation
+- **Implementation Phase**: Code generation can consume 2,000-10,000+ tokens per feature
+- **Complete Projects**: Full SDLC execution may consume 50,000-200,000+ tokens
+
+**Recommendations:**
+- ✅ **Monitor your token usage** regularly in your Anthropic console
+- ✅ **Start with small projects** to understand token consumption patterns
+- ✅ **Use selective agents** rather than full workflows for cost control
+- ✅ **Consider token limits** when planning large enterprise projects
+
 ## 🤝 Contributing
 
 1. Fork the repository
