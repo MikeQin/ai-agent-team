@@ -1,5 +1,14 @@
 # AI Agent Team - Complete Development Lifecycle Automation
 
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![GitHub stars](https://img.shields.io/github/stars/MikeQin/ai-agent-team?style=social)
+![GitHub forks](https://img.shields.io/github/forks/MikeQin/ai-agent-team?style=social)
+![GitHub issues](https://img.shields.io/github/issues/MikeQin/ai-agent-team)
+![GitHub last commit](https://img.shields.io/github/last-commit/MikeQin/ai-agent-team)
+![AI Agents](https://img.shields.io/badge/AI%20Agents-10-blue)
+![Claude Code](https://img.shields.io/badge/Claude%20Code-Compatible-green)
+![Multi-LLM](https://img.shields.io/badge/Multi--LLM-Support-orange)
+
 🚀 **An intelligent multi-agent system that automates the entire software development lifecycle from requirements gathering to production deployment.**
 
 ## Overview
@@ -527,6 +536,17 @@ ai-agent-team/
 ```
 
 ## 🛠️ Technology Stack
+
+![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-326ce5?style=for-the-badge&logo=kubernetes&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white)
 
 ### Frontend
 - **Mobile**: Flutter, Dart
