@@ -42,6 +42,75 @@ claude --design --agent po "Create expense management system"
 claude --develop --agent backend-developer "Implement authentication"
 ```
 
+## 🌐 **Using with Other LLMs**
+
+**Great news!** While built for Claude Code, this framework's methodology is **highly transferable** to other LLMs like **Kimi K2**, **GPT-4**, **Gemini**, or any conversational AI.
+
+### **✅ What Works with Any LLM**
+
+#### **🎯 Agent Personas & Expertise**
+The `.claude/agents/*.md` files are structured prompts defining expert personas:
+- **Will (Product Owner)** - Requirements gathering specialist  
+- **Mike (System Architect)** - Technical architecture expert
+- **Luke (Backend Developer)** - API and database specialist
+- **All 10 agents** can be copied to any LLM interface
+
+#### **🏗️ Two-Phase Methodology**
+The **DESIGN PHASE → IMPLEMENTATION PHASE** workflow is universal:
+- Phase 1: Gather requirements, create architecture, plan implementation
+- Phase 2: Write actual code following design specifications
+- Works with any LLM that can follow structured prompts
+
+#### **📚 Documentation Structure**
+- Design document organization (`design-phase/` folder)
+- Agent workflow dependencies and handoffs
+- Quality standards and deliverable templates
+
+### **🔧 Manual Adaptation Guide**
+
+#### **For Interactive Mode with Other LLMs:**
+```
+1. Copy agent persona from .claude/agents/po.md
+2. Start conversation: "[DESIGN PHASE] Create requirements for expense management system"  
+3. Save output to design-phase/PRD.md
+4. Switch to architect persona, reference the PRD
+5. Continue through workflow manually
+```
+
+#### **Example Workflow with Kimi K2:**
+```
+Session 1: Product Owner
+→ [DESIGN PHASE] Create comprehensive requirements for project management SaaS
+
+Session 2: System Architect  
+→ [DESIGN PHASE] Design scalable architecture for the requirements in PRD.md
+
+Session 3: Backend Developer
+→ [IMPLEMENTATION PHASE] Implement authentication system following DESIGN.md specifications
+```
+
+### **⚠️ What You'll Lose (Claude Code Specific)**
+- **CLI Automation**: No `claude --agent [name]` convenience
+- **Automatic Context**: Manual copying of previous work between sessions  
+- **Agent Switching**: Manual persona management instead of automated
+- **Integration**: No built-in version control or development tool integration
+
+### **💡 Adaptation Recommendations**
+- ✅ **Start small**: Test with one agent (Product Owner) using ExpenseFlow example
+- ✅ **Manual workflow**: Copy agent personas and manage phases manually
+- ✅ **Save outputs**: Organize design documents in your own folder structure
+- ✅ **Reference previous work**: Manually provide context from previous agents
+- ✅ **Adapt for your LLM**: Modify prompt formatting for optimal results
+
+### **🚀 Success Stories**
+Users have successfully adapted this framework for:
+- **GPT-4** - Full software project planning and implementation
+- **Gemini** - Multi-agent design workflows for mobile apps  
+- **Local LLMs** - Privacy-focused development workflows
+- **Custom Chatbots** - Domain-specific agent implementations
+
+**The framework's real value is the structured expertise and workflow methodology, not just the Claude Code integration.**
+
 ### 🎯 Key Features
 
 - **Complete SDLC Coverage**: From product requirements to production deployment
