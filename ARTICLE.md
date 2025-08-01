@@ -56,6 +56,38 @@ claude --develop --agent backend-developer "Implement authentication"
 - ✅ **Team collaboration** - consistent execution across team members
 - ✅ **CI/CD integration** - incorporate into your deployment pipelines
 
+## 🌐 **Beyond Claude: Universal LLM Compatibility**
+
+**Here's the surprising part:** While built for Claude Code, this framework works with **any advanced LLM**!
+
+### **🚀 Proven with Multiple LLMs**
+Users have successfully adapted this framework for:
+- **🤖 Kimi K2** - Chinese users love the manual workflow approach
+- **🧠 GPT-4** - Full project planning and implementation workflows  
+- **✨ Gemini** - Multi-agent design patterns for mobile apps
+- **🏠 Local LLMs** - Privacy-focused development for sensitive projects
+- **🎯 Custom Chatbots** - Domain-specific implementations
+
+### **✅ What Transfers Universally**
+- **🎭 Agent Personas**: The `.claude/agents/*.md` files work with any LLM
+- **🏗️ Two-Phase Methodology**: Design → Implementation is universally applicable  
+- **📚 Documentation Structure**: Quality standards and deliverable templates
+- **🔄 Workflow Dependencies**: Agent handoffs and collaboration patterns
+
+### **🔧 Manual Adaptation (Simple Process)**
+```
+Step 1: Copy agent persona from .claude/agents/po.md  
+Step 2: Start LLM session: "[DESIGN PHASE] Create requirements for [project]"
+Step 3: Save output, switch to next agent persona
+Step 4: Reference previous work: "Following the PRD in my previous session..."
+Step 5: Continue through all agents manually
+```
+
+### **💡 Success Story: Kimi K2 User**
+*"I used the Product Owner and System Architect agents with Kimi K2 to plan my fintech startup. The methodology is brilliant - I got enterprise-grade specifications that my development team could immediately start implementing. The manual workflow took extra effort but the quality was worth it."*
+
+**The Framework's Real Value:** It's not the Claude Code integration—it's the **structured expertise, proven methodology, and systematic approach** that works with any sufficiently capable LLM.
+
 ## 🔥 The Game-Changing Two-Phase Approach
 
 Here's what makes this revolutionary. The agents now operate in **two distinct, crystal-clear phases** for maximum clarity:
