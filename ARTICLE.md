@@ -19,7 +19,7 @@ As developers, we've all been there:
 
 ## Meet Your AI Development Team
 
-I've created a coordinated system of 10 specialized AI agents, each with deep expertise in their domain, now enhanced with **crystal-clear two-phase operation**:
+I've created a coordinated system of 10 specialized AI agents, each with deep expertise in their domain, now enhanced with **crystal-clear two-phase operations**:
 
 🎯 **Will** (Product Owner) - Gathers requirements and creates user stories  
 🏗️ **Mike** (System Architect) - Designs scalable, secure architectures  
@@ -151,6 +151,22 @@ Backend/Frontend/Mobile Implementation → Testing → Infrastructure
 
 **We just proved this works.** I've successfully demonstrated the entire AI Agent Team workflow by building **ExpenseFlow**, a comprehensive enterprise expense management system.
 
+## 📸 **Live Workflow in Action**
+
+Here's the actual AI Agent Team workflow executing the ExpenseFlow project - **no mockups, this is the real framework running:**
+
+### **🎯 Will (Product Owner) Delivers Requirements**
+![Will Product Owner completing comprehensive requirements](images/multi-agent-in-progress-1.jpg)
+*Will delivers a comprehensive 443-line PRD with 40+ detailed user stories, 3 personas (Employee, Manager, Finance/Admin), complete technical specifications, and risk assessment strategies.*
+
+### **🏗️ Multi-Agent Coordination in Progress** 
+![Multi-agent workflow showing systematic progression](images/multi-agent-in-progress-5.jpg)
+*The framework shows "We're now 70% complete with the AI Agent Team workflow!" as each agent builds on previous work. Notice how the todo system tracks each agent's completion status and deliverables.*
+
+### **🏆 Complete Project Delivered**
+![ExpenseFlow complete multi-platform system](images/multi-agent-in-progress-7.jpg)
+*Final result: A complete multi-platform system with Flutter mobile app, Next.js web dashboard, FastAPI backend, and AWS infrastructure - all documented and ready for implementation.*
+
 **What We Accomplished:**
 
 🎯 **Will** gathered requirements → 443-line PRD with 40+ user stories  
@@ -265,7 +281,7 @@ I'm actively working on:
 
 Ready to experience crystal-clear development workflow?
 
-🔗 **GitHub Repository:** [github.com/your-username/ai-agent-team](https://github.com/your-username/ai-agent-team)
+🔗 **GitHub Repository:** [github.com/MikeQin/ai-agent-team](https://github.com/MikeQin/ai-agent-team)
 
 **📁 Project Structure:**
 ```
@@ -340,4 +356,4 @@ I'd love to hear your thoughts and experiences in the comments below.
 
 ---
 
-*Mike Qin is a software architect and AI enthusiast passionate about using technology to solve real-world problems. Connect with him on LinkedIn to discuss AI-assisted development and the future of software engineering.*
+*Mike Qin is a principal software architect and AI enthusiast passionate about using technology to solve real-world problems. Connect with him on LinkedIn to discuss AI-assisted development and the future of software engineering.*
