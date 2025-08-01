@@ -279,7 +279,7 @@ ai-agent-team/
 │   └── expenseflow/    # Complete ExpenseFlow showcase
 │       ├── design/     # All design documents
 │       └── implementation/ # Implementation workspace
-└── scripts/           # Helper scripts for design/develop modes
+└── scripts/           # Helper scripts for design/develop phases
 ```
 
 **🏗️ Start with Design Phase:**

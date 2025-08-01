@@ -521,9 +521,9 @@ ai-agent-team/
 
 ## 🎯 **Framework Improvements**
 
-### **🔥 NEW: Crystal Clear Design vs Develop Modes**
+### **🔥 NEW: Crystal Clear Design vs Develop Phases**
 
-**Major UX Enhancement:** We've eliminated confusion by implementing explicit modes:
+**Major UX Enhancement:** We've eliminated confusion by implementing explicit `phases`:
 
 **🏗️ DESIGN PHASE:**
 - Creates comprehensive planning documents
