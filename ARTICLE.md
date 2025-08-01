@@ -355,4 +355,4 @@ I'd love to hear your thoughts and experiences in the comments below.
 
 ---
 
-*Mike Qin is a Principal Software Architect and AI Innovation Leader with 15+ years of experience building scalable systems. He specializes in AI-assisted development workflows and helps teams accelerate their software delivery. Connect with him on LinkedIn to discuss the future of software engineering and AI automation.*
+*Mike Qin is a Principal Software Architect and AI Innovation Leader with many years of experience building scalable systems. He specializes in AI-assisted development workflows and helps teams accelerate their software delivery. Connect with him on LinkedIn to discuss the future of software engineering and AI automation.*
