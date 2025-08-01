@@ -155,17 +155,16 @@ Backend/Frontend/Mobile Implementation → Testing → Infrastructure
 
 Here's the actual AI Agent Team workflow executing the ExpenseFlow project - **no mockups, this is the real framework running:**
 
+*📸 See the full workflow screenshots in the GitHub repository at [github.com/MikeQin/ai-agent-team/tree/main/images](https://github.com/MikeQin/ai-agent-team/tree/main/images)*
+
 ### **🎯 Will (Product Owner) Delivers Requirements**
-![Will Product Owner completing comprehensive requirements](images/multi-agent-in-progress-1.jpg)
-*Will delivers a comprehensive 443-line PRD with 40+ detailed user stories, 3 personas (Employee, Manager, Finance/Admin), complete technical specifications, and risk assessment strategies.*
+Will delivers a comprehensive **443-line PRD** with 40+ detailed user stories, 3 personas (Employee, Manager, Finance/Admin), complete technical specifications, and risk assessment strategies. The todo system tracks his completion and automatically hands off to the next agent.
 
 ### **🏗️ Multi-Agent Coordination in Progress** 
-![Multi-agent workflow showing systematic progression](images/multi-agent-in-progress-5.jpg)
-*The framework shows "We're now 70% complete with the AI Agent Team workflow!" as each agent builds on previous work. Notice how the todo system tracks each agent's completion status and deliverables.*
+The framework shows **"We're now 70% complete with the AI Agent Team workflow!"** as each agent builds on previous work. The todo system tracks each agent's completion status and deliverables, showing systematic progression through the entire team.
 
 ### **🏆 Complete Project Delivered**
-![ExpenseFlow complete multi-platform system](images/multi-agent-in-progress-7.jpg)
-*Final result: A complete multi-platform system with Flutter mobile app, Next.js web dashboard, FastAPI backend, and AWS infrastructure - all documented and ready for implementation.*
+Final result: A complete **multi-platform system** with Flutter mobile app, Next.js web dashboard, FastAPI backend, and AWS infrastructure - all documented and ready for implementation. Every component follows enterprise-grade standards.
 
 **What We Accomplished:**
 
@@ -356,4 +355,4 @@ I'd love to hear your thoughts and experiences in the comments below.
 
 ---
 
-*Mike Qin is a principal software architect and AI enthusiast passionate about using technology to solve real-world problems. Connect with him on LinkedIn to discuss AI-assisted development and the future of software engineering.*
+*Mike Qin is a Principal Software Architect and AI Innovation Leader with 15+ years of experience building scalable systems. He specializes in AI-assisted development workflows and helps teams accelerate their software delivery. Connect with him on LinkedIn to discuss the future of software engineering and AI automation.*
