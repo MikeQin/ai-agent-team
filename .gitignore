@@ -150,6 +150,9 @@ config.local.json
 secrets.json
 credentials.json
 
+# Claude Code Settings
+.claude/settings.local.json
+
 # Database Files
 *.db
 *.sqlite
