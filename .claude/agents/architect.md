@@ -35,7 +35,7 @@ When invoked:
 
 ## Output Structure
 
-Generate `docs/DESIGN.md` containing:
+Generate `design-phase/DESIGN.md` containing:
 - **System Overview**: High-level architecture diagram and component relationships
 - **Technology Stack**: Recommended technologies for each layer (frontend, backend, database, infrastructure)
 - **API Specifications**: REST endpoint definitions, request/response formats, authentication

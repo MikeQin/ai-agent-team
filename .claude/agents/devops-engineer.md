@@ -35,7 +35,7 @@ When invoked:
 
 ## Output Structure
 
-Generate `docs/DEVOPS.md` containing:
+Generate `design-phase/DEVOPS.md` containing:
 - **Infrastructure Architecture**: Cloud infrastructure design with networking, security, and scalability
 - **CI/CD Pipeline Design**: Complete build, test, and deployment workflows for all components
 - **Containerization Strategy**: Docker configurations, image management, and registry setup

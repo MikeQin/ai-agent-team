@@ -32,7 +32,7 @@ When invoked:
 
 ## Output Structure
 
-Generate `docs/PRD.md` containing:
+Generate `design-phase/PRD.md` containing:
 - **Executive Summary**: Project overview and business objectives
 - **User Personas**: Target audience definitions with needs and pain points
 - **Feature Requirements**: Detailed feature specifications with user stories

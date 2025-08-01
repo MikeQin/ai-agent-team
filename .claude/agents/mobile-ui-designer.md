@@ -35,7 +35,7 @@ When invoked:
 
 ## Output Structure
 
-Generate `docs/MOBILE-UI.md` containing:
+Generate `design-phase/MOBILE-UI.md` containing:
 - **Design System**: Color palette, typography, spacing, and component library
 - **User Interface Mockups**: Screen designs for key user flows and features
 - **User Journey Maps**: Detailed user flow diagrams and interaction patterns

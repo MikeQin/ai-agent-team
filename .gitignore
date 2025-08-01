@@ -122,9 +122,9 @@ site/
 .mkdocs.yml.bak
 
 # Generated Documentation
-docs/generated/
-docs/build/
-docs/_build/
+design-phase/generated/
+design-phase/build/
+design-phase/_build/
 
 # AI/ML Specific
 *.model
@@ -204,20 +204,20 @@ $RECYCLE.BIN/
 *.lnk
 
 # Generated Agent Outputs (keep structure, ignore generated content)
-docs/generated/
-docs/PRD.md
-docs/DESIGN.md
-docs/MOBILE-UI.md
-docs/WEB-UI.md
-docs/MOBILE-DEV.md
-docs/WEB-DEV.md
-docs/BACKEND-DEV.md
-docs/SECURITY.md
-docs/QA-TEST.md
-docs/DEVOPS.md
+design-phase/generated/
+design-phase/PRD.md
+design-phase/DESIGN.md
+design-phase/MOBILE-UI.md
+design-phase/WEB-UI.md
+design-phase/MOBILE-DEV.md
+design-phase/WEB-DEV.md
+design-phase/BACKEND-DEV.md
+design-phase/SECURITY.md
+design-phase/QA-TESTING.md
+design-phase/DEVOPS-DEPLOY.md
 
 # Keep important directories but ignore generated content
-!docs/.gitkeep
+!design-phase/.gitkeep
 !.claude/agents/
 !.github/
 

@@ -262,14 +262,14 @@ jobs:
                 agent_name=$(basename "$agent_file")
                 
                 # Check for output format specifications
-                if grep -i "output.*format\|generate.*docs/" "$agent_file" > /dev/null; then
+                if grep -i "output.*format\|generate.*design-phase/" "$agent_file" > /dev/null; then
                   echo "✓ Agent $agent_name has output format specifications"
                 else
                   echo "⚠️  Agent $agent_name missing output format specifications"
                 fi
                 
                 # Check for file path restrictions
-                if grep -i "docs/\|\.md\|structured" "$agent_file" > /dev/null; then
+                if grep -i "design-phase/\|\.md\|structured" "$agent_file" > /dev/null; then
                   echo "✓ Agent $agent_name has structured output paths"
                 fi
               fi

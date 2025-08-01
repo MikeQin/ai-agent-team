@@ -76,7 +76,7 @@ All agent definitions will be stored in `.claude/agents/` directory, following t
 ### 1. Will - Product Owner Agent
 **Role**: Requirements gathering and product definition expert
 - **Inputs**: Interactive user sessions
-- **Outputs**: `docs/PRD.md` - Comprehensive product requirements document
+- **Outputs**: `design-phase/PRD.md` - Comprehensive product requirements document
 - **Capabilities**: 
   - Interactive requirement elicitation
   - Stakeholder need analysis
@@ -85,8 +85,8 @@ All agent definitions will be stored in `.claude/agents/` directory, following t
 
 ### 2. Mike - System Architect Agent  
 **Role**: Technical architecture and system design expert
-- **Inputs**: `docs/PRD.md`
-- **Outputs**: `docs/DESIGN.md` - System architecture and technical design
+- **Inputs**: `design-phase/PRD.md`
+- **Outputs**: `design-phase/DESIGN.md` - System architecture and technical design
 - **Tech Stack**: Platform-agnostic architectural patterns
 - **Capabilities**:
   - System architecture design
@@ -96,8 +96,8 @@ All agent definitions will be stored in `.claude/agents/` directory, following t
 
 ### 3. Jennifer - Mobile UI Designer Agent
 **Role**: Mobile user interface and experience design expert
-- **Inputs**: `docs/DESIGN.md`, `docs/PRD.md`
-- **Outputs**: `docs/MOBILE-UI.md` - Mobile UI specifications and mockups
+- **Inputs**: `design-phase/DESIGN.md`, `design-phase/PRD.md`
+- **Outputs**: `design-phase/MOBILE-UI.md` - Mobile UI specifications and mockups
 - **Capabilities**:
   - Mobile-first design principles
   - User journey mapping
@@ -106,8 +106,8 @@ All agent definitions will be stored in `.claude/agents/` directory, following t
 
 ### 4. Amy - Web UI Designer Agent
 **Role**: Web user interface and experience design expert  
-- **Inputs**: `docs/DESIGN.md`, `docs/PRD.md`
-- **Outputs**: `docs/WEB-UI.md` - Web UI specifications and mockups
+- **Inputs**: `design-phase/DESIGN.md`, `design-phase/PRD.md`
+- **Outputs**: `design-phase/WEB-UI.md` - Web UI specifications and mockups
 - **Capabilities**:
   - Modern web design patterns
   - Cross-browser compatibility
@@ -117,8 +117,8 @@ All agent definitions will be stored in `.claude/agents/` directory, following t
 ### 5. Bob - Mobile Developer Agent
 **Role**: Mobile application development expert
 - **Tech Stack**: Flutter, Dart
-- **Inputs**: `docs/MOBILE-UI.md`, `docs/DESIGN.md`, `docs/PRD.md`
-- **Outputs**: `docs/MOBILE-DEV.md` - Mobile development implementation plan
+- **Inputs**: `design-phase/MOBILE-UI.md`, `design-phase/DESIGN.md`, `design-phase/PRD.md`
+- **Outputs**: `design-phase/MOBILE-DEV.md` - Mobile development implementation plan
 - **Capabilities**:
   - Cross-platform mobile development
   - State management implementation
@@ -128,8 +128,8 @@ All agent definitions will be stored in `.claude/agents/` directory, following t
 ### 6. Jim - Web Developer Agent
 **Role**: Web application development expert
 - **Tech Stack**: Next.js, React, shadcn/ui, Tailwind CSS, TypeScript
-- **Inputs**: `docs/WEB-UI.md`, `docs/DESIGN.md`, `docs/PRD.md`  
-- **Outputs**: `docs/WEB-DEV.md` - Web development implementation plan
+- **Inputs**: `design-phase/WEB-UI.md`, `design-phase/DESIGN.md`, `design-phase/PRD.md`  
+- **Outputs**: `design-phase/WEB-DEV.md` - Web development implementation plan
 - **Capabilities**:
   - Modern React development
   - Server-side rendering
@@ -139,8 +139,8 @@ All agent definitions will be stored in `.claude/agents/` directory, following t
 ### 7. Luke - Backend Developer Agent
 **Role**: Server-side development and API expert
 - **Tech Stack**: Python, FastAPI, SQLite (POC), PostgreSQL (Production), Redis
-- **Inputs**: `docs/DESIGN.md`, `docs/PRD.md`, `docs/SECURITY.md`
-- **Outputs**: `docs/BACKEND-DEV.md` - Backend implementation plan
+- **Inputs**: `design-phase/DESIGN.md`, `design-phase/PRD.md`, `design-phase/SECURITY.md`
+- **Outputs**: `design-phase/BACKEND-DEV.md` - Backend implementation plan
 - **Capabilities**:
   - RESTful API development
   - Database design and optimization (SQLite/PostgreSQL)
@@ -151,8 +151,8 @@ All agent definitions will be stored in `.claude/agents/` directory, following t
 ### 8. Sarah - Security Engineer Agent
 **Role**: Application and infrastructure security expert
 - **Tech Stack**: Security frameworks, penetration testing tools, compliance standards
-- **Inputs**: `docs/DESIGN.md`, `docs/PRD.md`
-- **Outputs**: `docs/SECURITY.md` - Security architecture and implementation plan
+- **Inputs**: `design-phase/DESIGN.md`, `design-phase/PRD.md`
+- **Outputs**: `design-phase/SECURITY.md` - Security architecture and implementation plan
 - **Capabilities**:
   - Security architecture design
   - Threat modeling and risk assessment
@@ -163,8 +163,8 @@ All agent definitions will be stored in `.claude/agents/` directory, following t
 
 ### 9. Vijay - QA Tester Agent
 **Role**: Quality assurance and testing expert
-- **Inputs**: `docs/MOBILE-DEV.md`, `docs/WEB-DEV.md`, `docs/BACKEND-DEV.md`, `docs/SECURITY.md`, `docs/PRD.md`
-- **Outputs**: `docs/QA-TEST.md` - Comprehensive testing strategy
+- **Inputs**: `design-phase/MOBILE-DEV.md`, `design-phase/WEB-DEV.md`, `design-phase/BACKEND-DEV.md`, `design-phase/SECURITY.md`, `design-phase/PRD.md`
+- **Outputs**: `design-phase/QA-TESTING.md` - Comprehensive testing strategy
 - **Capabilities**:
   - Test case generation
   - Automated testing strategies
@@ -175,8 +175,8 @@ All agent definitions will be stored in `.claude/agents/` directory, following t
 ### 10. Alex - DevOps Engineer Agent
 **Role**: Infrastructure, deployment, and operations expert
 - **Tech Stack**: Docker, Kubernetes, AWS/GCP/Azure, CI/CD pipelines, Terraform, Monitoring tools
-- **Inputs**: `docs/MOBILE-DEV.md`, `docs/WEB-DEV.md`, `docs/BACKEND-DEV.md`, `docs/QA-TEST.md`, `docs/SECURITY.md`
-- **Outputs**: `docs/DEVOPS.md` - Infrastructure and deployment strategy
+- **Inputs**: `design-phase/MOBILE-DEV.md`, `design-phase/WEB-DEV.md`, `design-phase/BACKEND-DEV.md`, `design-phase/QA-TESTING.md`, `design-phase/SECURITY.md`
+- **Outputs**: `design-phase/DEVOPS-DEPLOY.md` - Infrastructure and deployment strategy
 - **Capabilities**:
   - CI/CD pipeline design and implementation
   - Container orchestration and management
@@ -190,7 +190,7 @@ All agent definitions will be stored in `.claude/agents/` directory, following t
 
 ### Output Structure
 ```
-docs/
+design-phase/
 ├── PRD.md              # Product requirements (Will - Product Owner)
 ├── DESIGN.md           # Architecture design (Mike - Architect)  
 ├── MOBILE-UI.md        # Mobile UI specs (Jennifer - Mobile UI Designer)
@@ -199,8 +199,8 @@ docs/
 ├── WEB-DEV.md          # Web dev plan (Jim - Web Developer)
 ├── BACKEND-DEV.md      # Backend dev plan (Luke - Backend Developer)
 ├── SECURITY.md         # Security architecture (Sarah - Security Engineer)
-├── QA-TEST.md          # Testing strategy (Vijay - QA Tester)
-└── DEVOPS.md           # Infrastructure & deployment (Alex - DevOps Engineer)
+├── QA-TESTING.md       # Testing strategy (Vijay - QA Tester)
+└── DEVOPS-DEPLOY.md    # Infrastructure & deployment (Alex - DevOps Engineer)
 
 .claude/agents/
 ├── po.md               # Will - Product Owner agent definition

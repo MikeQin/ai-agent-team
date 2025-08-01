@@ -3,7 +3,7 @@ description: Suggest a new feature or enhancement for the AI Agent Team
 title: "[FEATURE]: "
 labels: ["enhancement", "triage"]
 assignees:
-  - ai-agent-team/maintainers
+  - ai-agent-team-maintainers
 
 body:
   - type: markdown

@@ -35,7 +35,7 @@ When invoked:
 
 ## Output Structure
 
-Generate `docs/SECURITY.md` containing:
+Generate `design-phase/SECURITY.md` containing:
 - **Threat Model**: Comprehensive threat analysis using STRIDE methodology with attack trees
 - **Security Architecture**: End-to-end security design covering all system components
 - **Authentication Strategy**: Multi-factor authentication, password policies, session management

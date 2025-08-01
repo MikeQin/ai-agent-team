@@ -35,7 +35,7 @@ When invoked:
 
 ## Output Structure
 
-Generate `docs/WEB-UI.md` containing:
+Generate `design-phase/WEB-UI.md` containing:
 - **Design System**: Comprehensive style guide with colors, typography, spacing, and components
 - **Layout Specifications**: Responsive grid systems and breakpoint definitions
 - **Component Library**: Detailed specifications for buttons, forms, navigation, and content components

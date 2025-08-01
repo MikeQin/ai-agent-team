@@ -3,7 +3,7 @@ description: Request a new specialized AI agent for the development team
 title: "[NEW AGENT]: "
 labels: ["new-agent", "enhancement", "triage"]
 assignees:
-  - ai-agent-team/maintainers
+  - ai-agent-team-maintainers
 
 body:
   - type: markdown
@@ -101,8 +101,8 @@ body:
       placeholder: |
         List the files or information this agent would need:
         
-        - docs/DESIGN.md (system architecture)
-        - docs/BACKEND-DEV.md (API specifications)
+        - design-phase/DESIGN.md (system architecture)
+        - design-phase/BACKEND-DEV.md (API specifications)
         - Performance requirements from PRD
         - Security requirements from Security Engineer
       render: markdown
@@ -115,9 +115,9 @@ body:
       placeholder: |
         Example deliverables:
         
-        - docs/DATABASE-DESIGN.md (schema and data model)
-        - docs/DATABASE-PERFORMANCE.md (optimization strategies)
-        - docs/DATA-MIGRATION.md (migration scripts and procedures)
+        - design-phase/DATABASE-DESIGN.md (schema and data model)
+        - design-phase/DATABASE-PERFORMANCE.md (optimization strategies)
+        - design-phase/DATA-MIGRATION.md (migration scripts and procedures)
         - Database scripts and configuration files
       render: markdown
     validations:
@@ -218,7 +218,7 @@ body:
         Consider alternatives:
         
         - Could existing Backend Developer agent be enhanced instead?
-        - Could this be a sub-specialization or mode of an existing agent?
+        - Could this be a sub-specialization or phase of an existing agent?
         - Could external tools or services handle this requirement?
 
   - type: checkboxes

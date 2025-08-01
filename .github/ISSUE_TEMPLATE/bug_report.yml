@@ -3,7 +3,7 @@ description: File a bug report to help us improve the AI Agent Team
 title: "[BUG]: "
 labels: ["bug", "triage"]
 assignees:
-  - ai-agent-team/maintainers
+  - ai-agent-team-maintainers
 
 body:
   - type: markdown
@@ -73,7 +73,7 @@ body:
       placeholder: |
         Example:
         - User requirements: "Build an e-commerce platform..."
-        - Previous agent output: docs/PRD.md
+        - Previous agent output: design-phase/PRD.md
         - Configuration: default settings
       render: markdown
 

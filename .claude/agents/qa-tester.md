@@ -35,7 +35,7 @@ When invoked:
 
 ## Output Structure
 
-Generate `docs/QA-TEST.md` containing:
+Generate `design-phase/QA-TEST.md` containing:
 - **Testing Strategy Overview**: Comprehensive approach covering all testing types and phases
 - **Test Planning**: Test scope, objectives, entry/exit criteria, and resource requirements
 - **Functional Test Cases**: Detailed test scenarios for all features with expected results
