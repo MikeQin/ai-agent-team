@@ -1,4 +1,5 @@
 # AI Agent Team - Git Ignore File
+/examples/expenseflow/implementation/*
 
 # Operating System Files
 .DS_Store
